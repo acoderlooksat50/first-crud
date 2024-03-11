@@ -14,7 +14,8 @@ MongoClient.connect(connectionString)
 
         app.set('view engine', 'ejs')
         app.use(bodyParser.urlencoded({extended: true})) //command to use body-parser. Must be before handlers
-
+        app.use(express.static('public'))//allows public to use the public folder. static files folder
+        app.use(bodyParser.json())//to parse json data
         app.listen(8000, ()=> console.log('listening on port 8000')) //sets server to listen on port, consoles that the port is active
 
         app.get('/', (req,res) => {
@@ -29,11 +30,39 @@ MongoClient.connect(connectionString)
         app.post('/quotes', (req,res) => {
             quotesCollection.insertOne(req.body)
                 .then(result => {
-                    console.log(result)
+                    // console.log(result)
                     res.redirect('/')
                 })
                 .catch(error => console.error(error))
             })  //posts something to the database.
+
+        app.put('/quotes', (req,res) => {
+            quotesCollection.findOneAndUpdate(
+                {name: 'Yoda'},
+                {$set: {
+                    name: req.body.name,
+                    quote: req.body.quote
+                }},
+                {
+                    upsert: true
+                }
+            )
+            .then(result => {
+                res.json('success')
+            })
+            .catch(error => console.error(error))
+        })
+
+        app.delete('/quotes', (req,res) => {
+            quotesCollection.deleteOne({name: req.body.name})
+            .then (result => {
+                if (result.deletedCount === 0){
+                    return res.json('No quote to delete')
+                }
+                res.json("Deleted Darth Vader's quote")
+            })
+            .catch (error => console.error (error))
+        })
     })
     .catch(error => console.error(error))
 
