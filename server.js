@@ -21,11 +21,10 @@ MongoClient.connect(connectionString)
             quotesCollection.find().toArray()  //find all quotes and place into an array
                 .then(results => {
                     console.log(results)
+                    res.render('index.ejs',{quotes: results})//when browser contacts the server it is looking to GET information.  This will render index.ejs from the views folder.
                 })
                 .catch(error => console.error (error))
-
-            res.sendFile(__dirname + '/index.html')
-            })  //when browser contacts the server it is looking to GET information.  This gets the index.htm file from the current directory.
+            })  
 
         app.post('/quotes', (req,res) => {
             quotesCollection.insertOne(req.body)
