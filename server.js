@@ -21,7 +21,7 @@ MongoClient.connect(connectionString)
             quotesCollection.find().toArray()  //find all quotes and place into an array
                 .then(results => {
                     console.log(results)
-                    res.render('index.ejs',{quotes: results})//when browser contacts the server it is looking to GET information.  This will render index.ejs from the views folder.
+                    res.render('index.ejs',{quotes: results})//when browser contacts the server it is looking to GET information.  This will render index.ejs from the views folder. in index, results will be placed in the quotes variable.
                 })
                 .catch(error => console.error (error))
             })  

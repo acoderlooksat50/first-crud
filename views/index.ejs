@@ -13,10 +13,10 @@
         <button type="submit">Submit</button>
     </form>
     <h2> Quotes </h2>
-    <ul class="quotes">
+    <ul class="quotes"> <!--space to render (display) the data-->
         <!--loop through the quotes-->
         <% for (let i = 0; i < quotes.length; i++){%>
-        <li class="quotes">
+        <li class="quote">
             <!--Output name from the iterarated quote object-->
             <span><%= quotes[i].name %></span>:
             <!--Output quoute from the iterarated quote object--> 
@@ -24,6 +24,10 @@
         </li>
         <% } %>
     </ul>
-    <%= quotes %>  <!--space to render (display) the data-->
+    <div>
+        <h2> Darth Vader invades!</h2>
+        <p>Replace the first Yoda quote with a quote written by Darth Vader</p>
+        <button id="update-button">Replace Yoda's quote</button>
+    </div>
 </body>
 </html>
